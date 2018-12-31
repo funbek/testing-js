@@ -1,16 +1,52 @@
+import img1 from '../../img/images-2.jpg'
+import img2 from '../../img/img_forest.jpg'
+import img3 from '../../img/pexels-photo.jpg'
+
 export default function asyncImageLoading() {
-  const img1 = 'https://wallpaper-gallery.net/images/images/images-2.jpg';
-  const img2 = 'https://www.w3schools.com/howto/img_forest.jpg';
-  const img3 = 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350';
 
-  const imageBox = document.querySelector('.image-box');
-  const image = new Image()
+  const imageBox = document.querySelector('.image-box')
 
-  image.src = img1;
+  function loadImage(url) {
+    return new Promise((resolve, reject) => {
+      let image = new Image()
 
-  imageBox.innerHTML = 'Loading...';
+      imageBox.appendChild(image)
+      image.src = url
 
-  setTimeout(() => {
-    imageBox.appendChild(image);
-  }, 2000)
+      image.addEventListener('load', () => {
+        resolve()
+      })
+      image.addEventListener('error', () => {
+        reject()
+      })
+    })
+  }
+
+  let loadingImagePromise = loadImage(img1)
+
+  loadingImagePromise
+    .then(
+      () => {
+        return loadImage(img2)
+      },
+      () => {
+
+      }
+    )
+    .then(
+      () => {
+        return loadImage(img3)
+      },
+      () => {
+
+      }
+    )
+    .then(
+      () => {
+        console.log('Все загруженно!!!')
+      },
+      () => {
+
+      }
+    )
 }

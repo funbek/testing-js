@@ -26,5 +26,15 @@ module.exports = {
       port: 8000,
       appendScriptTag: true
     })
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
+      }
+    ]
+  }
 }
